@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname,'src/public')));
 
 // Importando rutas
 app.use(require("./src/routes/user.routes"));
-// app.use(require(""));
+ app.use(require("./src/routes/task.routes"));
 
 // Configurando puerto
 app.listen(port, ()=>{
