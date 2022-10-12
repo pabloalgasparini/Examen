@@ -4,7 +4,8 @@ const validarJWT = require('../middlewares/validar-jwt');
 const {
     getTask,
     postTask,
-    putTask
+    putTask,
+    deleteTask
 } = require('../controllers/task.controllers');
 
 // Defino rutas
@@ -17,5 +18,9 @@ router.post('/task',[
 router.put('/task/:idTareas',[
     validarJWT
 ], putTask)
+
+router.delete('/task/:idTareas',[
+    validarJWT
+], deleteTask)
 
 module.exports = router;

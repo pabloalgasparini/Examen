@@ -41,7 +41,7 @@ ctrlTask.getTask = async (req, res) => {
   } catch (error) {
     return res.status(500).json({error: error.message})
   }
-}
+};
 
 ctrlTask.putTask = async (req, res) => {
   const idTareas = req.params.idTareas
@@ -59,4 +59,24 @@ ctrlTask.putTask = async (req, res) => {
       })
   }
 };
+
+ctrlTask.deleteTask = async (req, res) => {
+  const tareaId = req.params.idTareas
+ 
+  try{
+      // Borro físicamente
+      // const dataUpdated = await User.findByIdAndDelete(tareaId)
+      // Borro Logicamente
+      const dataUpdated = await Task.findByIdAndUpdate(tareaId, {isActive: false})
+      return res.json({
+          msg: 'La tarea se borró correctamente',
+          dataUpdated
+      })
+  }catch (error){
+      return res.status(500).json({
+          msg: 'Error al borrar tarea'
+      })
+  }
+};
+
 module.exports = ctrlTask;
