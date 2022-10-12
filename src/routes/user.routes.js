@@ -6,15 +6,25 @@ const {
     putUser,
     deleteUser
 } = require('../controllers/user.controllers');
+const esAdmin = require('../middlewares/es-admin');
+const validarJWT = require('../middlewares/validar-jwt');
 
-router.get("/user/:id", getUser);
+
+router.get("/user",[
+    validarJWT,
+    esAdmin
+], getUser);
 
 // router.get("/user", getUser);
 
 router.post("/user", postUser);
 
-router.put("/user/:id", putUser);
+router.put("/user",[
+    validarJWT
+], putUser);
 
-router.delete("/user/:id", deleteUser);
+router.delete("/user",[
+    validarJWT
+], deleteUser);
 
 module.exports = router;

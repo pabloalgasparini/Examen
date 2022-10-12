@@ -4,13 +4,13 @@ const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 
-const dbConnect =require("./src/BD/connection");
 
 dotenv.config();
 
+const dbConnect =require("./src/BD/connection");
+dbConnect();
 // Inicializaciones
 const app = express();
-dbConnect();
 
 // Configuraciones
 const port = process.env.PORT || 3000;
@@ -25,7 +25,9 @@ app.use(express.static(path.join(__dirname,'src/public')));
 
 // Importando rutas
 app.use(require("./src/routes/user.routes"));
- app.use(require("./src/routes/task.routes"));
+app.use(require("./src/routes/auth.routes"));
+app.use(require("./src/routes/task.routes"));
+
 
 // Configurando puerto
 app.listen(port, ()=>{

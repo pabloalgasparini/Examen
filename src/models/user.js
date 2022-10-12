@@ -16,17 +16,21 @@ const userSchema = new Schema({
     isActive:{
         type: Boolean,
         default: true
+    },
+    role:{
+        type: String,
+        default:'admin_user'
     }
 },{
     versionKey: false,
     timestamp: true
 });
 
-// UserSchema.methods.toJSON = function() {
-//     const { password, _id, ...user} = this.toObject();
-//     user.uid = _id;
+userSchema.methods.toJSON = function() {
+    const { password, _id, ...user} = this.toObject();
+    user.uid = _id;
 
-//     return user;
-// }
+    return user;
+}
 
 module.exports = model('Users', userSchema);

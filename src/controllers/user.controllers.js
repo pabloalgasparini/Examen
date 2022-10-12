@@ -1,16 +1,18 @@
 const User = require ("../models/user");
-
+const bcrypt = require('bcrypt');
 const ctrlUser = {};
 
 // Controlador para obtener todos los usuarios de la base de datos con método. save()
 ctrlUser.getUser = async (req, res) => {
-    const {id} = req.params
+    const id = req.user._id
     // Se consultan todos los documentos de la base de datos.
     const user = await User.findById(id);
 
     // Se devuelve al cliiente un arreglo con los datod de los usuarios
     return res.json(user)
 };
+
+
 
 // ctrlUser.getUser = async (req, res) => {
 //     // Se consultan todos los documentos de la base de datos.
@@ -21,13 +23,19 @@ ctrlUser.getUser = async (req, res) => {
 // };
 
 ctrlUser.postUser = async (req, res) => {
+    // Se obtienen los datos enviados por el método POST
     const {username, password, email} = req.body;
 
+    // Encriptar la contraseña
+    const newPassword = bcrypt.hashSync(password,10);
+
+    // Se instancia un nuevo documento de MongoDB para luego se guardado.
     const newUser = new User({
         username,
-        password,
+        password: newPassword,
         email
     });
+    // Se guardan los datos en la BS.
     const user = await newUser.save()
     console.log(user);
 
@@ -38,11 +46,11 @@ ctrlUser.postUser = async (req, res) => {
 
 // Actaulizar usuario
 ctrlUser.putUser = async (req, res) => {
-    const id = req.params.id
+    const userId = req.user._id
     const {username, isActive, email, ...otraData} = req.body;
     const data = {username, email, isActive};
     try{
-        const dataUpdated = await User.findOneAndUpdate(id, data, {new: true} )
+        const dataUpdated = await User.findOneAndUpdate(userId, data, {new: true} )
         return res.json({
             msg: 'Usuario actualizado correctamente',
             dataUpdated
@@ -55,13 +63,13 @@ ctrlUser.putUser = async (req, res) => {
 };
 
 ctrlUser.deleteUser = async (req, res) => {
-    const id = req.params.id
+    const userId = req.user._id
    
     try{
         // Borro físicamente
-        // const dataUpdated = await User.findByIdAndDelete(id)
+        // const dataUpdated = await User.findByIdAndDelete(userId)
         // Borro Logicamente
-        const dataUpdated = await User.findByIdAndUpdate(id, {isActive: false})
+        const dataUpdated = await User.findByIdAndUpdate(userId, {isActive: false})
         return res.json({
             msg: 'Usuario borró correctamente',
             dataUpdated

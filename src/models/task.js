@@ -18,7 +18,7 @@ const TaskSchema = new Schema(
         type: Boolean,
         default: false
      },
-     userIde:{
+     userId:{
         type: Schema.Types.ObjectId, ref: 'Users'
      },
      categories: [
