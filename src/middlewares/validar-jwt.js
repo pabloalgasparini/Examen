@@ -24,7 +24,7 @@ const validarJWT = async (req, res, next) => {
             });
         }
 
-        Se verifica si el usuario está activo
+        // Se verifica si el usuario está activo
         if (!usuario.isActive) {
             return res.status(401).json({
                 msg: 'Token no válido - el usuari no está activo'
