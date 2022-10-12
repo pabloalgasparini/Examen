@@ -24,12 +24,12 @@ const validarJWT = async (req, res, next) => {
             });
         }
 
-        // Se verifica si el usuario está activo
-        // if (!usuario.isActive) {
-        //     return res.status(401).json({
-        //         msg: 'Token no válido - el usuari no está activo'
-        //     })
-        // }
+        Se verifica si el usuario está activo
+        if (!usuario.isActive) {
+            return res.status(401).json({
+                msg: 'Token no válido - el usuari no está activo'
+            })
+        }
 
         // Se añade la información del usuario al request para que pueda ser utilizada en el resto de middlewares.
         req.user = usuario;
