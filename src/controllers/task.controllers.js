@@ -65,7 +65,7 @@ ctrlTask.deleteTask = async (req, res) => {
  
   try{
       // Borro físicamente
-      // const dataUpdated = await User.findByIdAndDelete(tareaId)
+      // const dataUpdated = await Task.findByIdAndDelete(tareaId)
       // Borro Logicamente
       const dataUpdated = await Task.findByIdAndUpdate(tareaId, {isActive: false})
       return res.json({
