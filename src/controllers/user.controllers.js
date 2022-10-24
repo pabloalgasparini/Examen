@@ -29,6 +29,13 @@ ctrlUser.postUser = async (req, res) => {
     // Encriptar la contraseña
     const newPassword = bcrypt.hashSync(password,10);
 
+    const userExist = await User.findOne({email});
+    if(userExist){
+        return res.status(400).json({
+            message:"El usuario ya existe"
+        })
+    }
+
     // Se instancia un nuevo documento de MongoDB para luego se guardado.
     const newUser = new User({
         username,
